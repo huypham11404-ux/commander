@@ -1,4 +1,4 @@
-"""REAPER Native Driver implementing atomic file IPC with cross-process mutex."""
+"""REAPER Native Driver implementing atomic file IPC with cross-process OS mutex, duplicate detection, and robust error handling."""
 import os
 import sys
 import time
@@ -7,7 +7,7 @@ import uuid
 import tempfile
 import logging
 from contextlib import contextmanager
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Set
 
 from commander.driver.base_adapter import IDawAdapter
 from commander.protocol.schema import CommandRequest, CommandResponse, CommanderError, ErrorCode, PROTOCOL_VERSION
@@ -34,6 +34,8 @@ class ReaperFileDriver(IDawAdapter):
         self.lock_file = os.path.join(self.ipc_dir, "server.lock")
         self.mutex_file = os.path.join(self.ipc_dir, "ipc_mutex.lock")
 
+        self._processed_request_ids: Set[str] = set()
+
     @contextmanager
     def _acquire_mutex(self, timeout: float):
         """Cross-process file lock protecting request-response round-trip."""
@@ -43,6 +45,7 @@ class ReaperFileDriver(IDawAdapter):
         while time.monotonic() < deadline:
             try:
                 if sys.platform == "win32":
+                    fd.seek(0)
                     msvcrt.locking(fd.fileno(), msvcrt.LK_NBLCK, 1)
                 else:
                     fcntl.flock(fd.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -59,6 +62,7 @@ class ReaperFileDriver(IDawAdapter):
         finally:
             try:
                 if sys.platform == "win32":
+                    fd.seek(0)
                     msvcrt.locking(fd.fileno(), msvcrt.LK_UNLCK, 1)
                 else:
                     fcntl.flock(fd.fileno(), fcntl.LOCK_UN)
@@ -67,6 +71,7 @@ class ReaperFileDriver(IDawAdapter):
             fd.close()
 
     def is_alive(self, stale_threshold_sec: float = 30.0) -> bool:
+        """Check whether REAPER Lua bridge is alive by checking server.lock mtime."""
         if not os.path.exists(self.lock_file):
             return False
         try:
@@ -76,9 +81,14 @@ class ReaperFileDriver(IDawAdapter):
             return False
 
     def send_command(self, request: CommandRequest, timeout: float = 10.0) -> CommandResponse:
+        """Atomically transmit command to REAPER and await correlated response."""
+        # Check duplicate request
+        if request.id in self._processed_request_ids:
+            raise CommanderError(ErrorCode.INVALID_PARAMS, f"Duplicate request ID detected: {request.id}")
+
         t0 = time.monotonic()
         with self._acquire_mutex(timeout):
-            # 1. Clean prior stale response if any
+            # 1. Clean prior response if any
             if os.path.exists(self.response_file):
                 try:
                     os.remove(self.response_file)
@@ -91,7 +101,7 @@ class ReaperFileDriver(IDawAdapter):
                 f.write(payload)
             os.replace(self.command_tmp, self.command_file)
 
-            # 3. Poll for response correlating with request.id
+            # 3. Poll for response correlated with request.id
             deadline = time.monotonic() + timeout
             while time.monotonic() < deadline:
                 if os.path.exists(self.response_file):
@@ -103,6 +113,7 @@ class ReaperFileDriver(IDawAdapter):
                             resp_id = resp_dict.get("id")
                             # Detect stale response from abandoned prior request
                             if resp_id and resp_id != request.id:
+                                logger.warning("Discarded stale response id=%s while awaiting req_id=%s", resp_id, request.id)
                                 try:
                                     os.remove(self.response_file)
                                 except OSError:
@@ -117,6 +128,8 @@ class ReaperFileDriver(IDawAdapter):
                                 pass
 
                             exec_time = (time.monotonic() - t0) * 1000.0
+                            self._processed_request_ids.add(request.id)
+
                             status = resp_dict.get("status", "ok")
                             if status == "error":
                                 return CommandResponse(

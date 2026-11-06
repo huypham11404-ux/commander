@@ -1,7 +1,0 @@
-mido
-pretty_midi
-music21
-numpy
-scipy
-websockets
-psutil

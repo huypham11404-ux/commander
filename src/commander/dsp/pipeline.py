@@ -20,8 +20,11 @@ class DspAnalyzer:
 
         # 2. RMS & Crest Factor
         rms = float(np.sqrt(np.mean(data**2)))
-        crest_factor = sample_peak / (rms + 1e-12)
-        crest_factor_db = float(20 * np.log10(crest_factor))
+        if rms <= 1e-9:
+            crest_factor_db = 0.0
+        else:
+            crest_factor = sample_peak / (rms + 1e-12)
+            crest_factor_db = float(20 * np.log10(max(crest_factor, 1e-6)))
 
         # 3. ITU-R BS.1770 K-Weighting Filter (Approximated 2-stage biquad)
         # Stage 1: High shelf filter (~1.5kHz)
