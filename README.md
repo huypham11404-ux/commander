@@ -22,6 +22,7 @@ Toàn bộ kết quả nghiên cứu chuyên sâu được tổ chức thành 12
 10. [**COMMANDER_ARCHITECTURE_PROPOSAL.md**](docs/COMMANDER_ARCHITECTURE_PROPOSAL.md): Bản thiết kế kiến trúc tổng thể toàn diện của Commander (biểu đồ hệ thống, đặc tả chi tiết 6 phân hệ chính và bảng đo lường tài nguyên).
 11. [**MIGRATION_AND_IMPLEMENTATION_ROADMAP.md**](docs/MIGRATION_AND_IMPLEMENTATION_ROADMAP.md): Lộ trình triển khai 4 giai đoạn (*Phase 1: Foundation -> Phase 2: DAW Automation -> Phase 3: Music Intelligence -> Phase 4: Intelligent Workflow & Audio*).
 12. [**FINAL_COMMANDER_FOUNDATION_RECOMMENDATION.md**](docs/FINAL_COMMANDER_FOUNDATION_RECOMMENDATION.md): Báo cáo khuyến nghị cuối cùng: ma trận quyết định nền tảng kỹ thuật, phân định thành phần kế thừa vs tự phát triển.
+13. [**RED_TEAM_AUDIT_REPORT.md**](docs/RED_TEAM_AUDIT_REPORT.md): Báo cáo kiểm định độc lập Red-Team: phân loại trạng thái bằng chứng (VERIFIED, MEASURED, CONTRADICTED...), bác bỏ các tuyên bố chưa đủ căn cứ và thiết lập Acceptance Criteria.
 
 ---
 
@@ -30,9 +31,15 @@ Toàn bộ kết quả nghiên cứu chuyên sâu được tổ chức thành 12
 Nghiên cứu tuân thủ nghiêm ngặt nguyên tắc **thực chứng khoa học**, không suy đoán trên lý thuyết:
 - `evidence/reusable_component_catalog.json`: Danh mục tra cứu các thành phần mã nguồn mở tái sử dụng được, kèm license và mức tiêu thụ tài nguyên.
 - `evidence/ipc_benchmark_results.json`: Số liệu đo đạc thực tế trên 1.000 chu kỳ lệnh của các cơ chế IPC (File-based, Socket JSON-RPC, WebSocket) và thời gian khôi phục rollback (0.075ms).
-- `evidence/music_intelligence_benchmark.json`: Kết quả thực nghiệm phân tích nhạc lý thực tế trên file MIDI mẫu (`sample_progression.mid`): nhận diện chính xác điệu tính C minor trong 23.3ms và phân tích phổ âm thanh trong 2.71ms.
-- `experiments/ipc_benchmark_suite.py`: Bộ script kiểm thử đo đạc hiệu năng IPC độc lập.
-- `experiments/music_intelligence_test.py`: Bộ script thử nghiệm phân tích nhạc lý và trích xuất đặc trưng âm thanh.
+- `evidence/rigorous_ipc_benchmarks.json`: Số liệu đo lường IPC chi tiết với 100 warmup requests, p50, p95, p99, max latency và kiểm chứng tính nhất quán toán học.
+- `evidence/reaper_undo_transaction_audit.json`: Kết quả audit mã nguồn về cơ chế undo block, undo group labeling và rủi ro partial failure.
+- `evidence/measured_memory_profile.json` & `evidence/ram_audio_stability_audit.json`: Hồ sơ đo đạc bộ nhớ thực tế và phân tích rủi ro audio buffer trên Intel Core i3, RAM 8GB.
+- `evidence/comprehensive_music_intelligence_benchmarks.json`: Dữ liệu kiểm nghiệm đa trường hợp hòa âm và voice leading (chỉ ra giới hạn của thuật toán Krumhansl-Schmuckler).
+- `evidence/dsp_audio_feedback_benchmarks.json`: Kết quả đo đạc DSP trên nhiều độ dài audio (0.5s đến 30s) với bộ lọc K-weighting ITU-R BS.1770.
+- `evidence/deep_dependency_licensing.json`: Báo cáo rà soát giấy phép trực tiếp và bắc cầu của các thư viện.
+- `experiments/rigorous_ipc_benchmarks.py`: Bộ script đo lường vi mô IPC nâng cao.
+- `experiments/comprehensive_music_intelligence_test.py`: Bộ script kiểm thử nhạc lý toàn diện.
+- `experiments/dsp_audio_feedback_benchmarks.py`: Bộ script đo đạc DSP và bộ lọc âm thanh.
 
 ---
 

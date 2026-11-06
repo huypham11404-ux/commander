@@ -1,0 +1,29 @@
+{
+  "audit_name": "REAPER Undo & Transaction Mechanics Deep Audit",
+  "source_files": [
+    "references/Reaper-MCP/reaper_scripts/reaper_mcp_server.lua",
+    "references/Reaper-MCP/reaper_mcp/undo_group.py"
+  ],
+  "findings": {
+    "single_command_atomicity": {
+      "status": "VERIFIED",
+      "mechanism": "Commands like track_create, track_delete_batch call reaper.Undo_BeginBlock() and reaper.Undo_EndBlock(name, -1) individually.",
+      "result": "Each individual command creates 1 separate undo point in REAPER's undo stack."
+    },
+    "multi_command_tool_atomicity": {
+      "status": "CONTRADICTED",
+      "prior_claim": "A whole multi-step AI operation is undone with a single Ctrl+Z.",
+      "ground_truth": "CONTRADICTED by undo_group.py: 'Nothing is held open in REAPER: a group only labels. (REAPER drops an undo block that is held open between bridge ticks, so collapsing a tool into one step was not possible)'. Each sub-command creates its own undo step labeled 'MCP: <tool>#<run> > <command>'. Undoing requires project_undo_group or multiple Ctrl+Z presses."
+    },
+    "partial_failure_behavior": {
+      "status": "OBSERVED",
+      "mechanism": "Line 6111 in Lua wraps each command in pcall(handler). When command N fails, pcall catches the error, calls send_error(), and suppresses recording an undo point for command N (Line 5982: 'A failed command gets none').",
+      "unhandled_risk": "Commands 1 to N-1 were ALREADY committed to REAPER in previous ticks. There is NO automatic backward rollback executed by Lua for prior committed commands. The client must explicitly invoke project_undo(steps=N-1) or project_undo_group to restore initial state.",
+      "undo_history_fragmentation": "If an operation fails at step 4 of 5 without client-driven undo, steps 1, 2, 3 remain in REAPER's undo history as distinct labeled steps."
+    },
+    "post_execution_state_verification": {
+      "status": "VERIFIED_ABSENT",
+      "finding": "Lua handler returns the immediate API return value. It does not perform post-execution verification (e.g., verifying track actually exists or VST actually loaded and reports valid sample rate/channel count) unless explicitly coded in that specific tool."
+    }
+  }
+}

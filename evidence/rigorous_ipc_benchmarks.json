@@ -1,0 +1,49 @@
+{
+  "benchmark_metadata": {
+    "date": "2026-11-06",
+    "environment": "Linux container x86_64, Python 3.12.3",
+    "methodology": "Microbenchmark of transport serialization and IPC channel only"
+  },
+  "file_ipc": {
+    "transport": "File-based Atomic Swap (Raw filesystem transport only)",
+    "warmup_requests": 100,
+    "measured_requests": 1000,
+    "execution_mode": "Sequential (1 client, 1 writer, in-memory FS cache)",
+    "wall_clock_time_sec": 0.2554342489997907,
+    "latency_mean_ms": 0.2546519569978045,
+    "latency_p50_ms": 0.2309179999429034,
+    "latency_p95_ms": 0.333932000103232,
+    "latency_p99_ms": 0.5174370003260265,
+    "latency_max_ms": 0.6694759999845701,
+    "throughput_ops_per_sec": 3914.90179533763,
+    "caveat": "Measures transport serialization and local OS file cache. Does NOT include REAPER's 15-33ms defer() loop tick or ReaScript execution latency."
+  },
+  "socket_ipc": {
+    "transport": "TCP Socket JSON-RPC (Loopback 127.0.0.1)",
+    "warmup_requests": 100,
+    "measured_requests": 1000,
+    "execution_mode": "Sequential (Single persistent connection)",
+    "wall_clock_time_sec": 0.16844093000008797,
+    "latency_mean_ms": 0.16766425498872195,
+    "latency_p50_ms": 0.16262999997707084,
+    "latency_p95_ms": 0.20588100005625165,
+    "latency_p99_ms": 0.23423899983754382,
+    "latency_max_ms": 0.27288999990560114,
+    "throughput_ops_per_sec": 5936.799327808732,
+    "caveat": "Measures loopback socket serialization. Does not include DAW audio thread dispatch or plugin load overhead."
+  },
+  "websocket_ipc": {
+    "transport": "WebSocket JSON-RPC (Tauri/Browser UI Bridge)",
+    "warmup_requests": 100,
+    "measured_requests": 1000,
+    "execution_mode": "Sequential async request-response over persistent ws connection",
+    "wall_clock_time_sec": 0.31852656899991416,
+    "latency_mean_ms": 0.31792913499930364,
+    "latency_p50_ms": 0.29556449999290635,
+    "latency_p95_ms": 0.4121930001019791,
+    "latency_p99_ms": 0.5096599998068996,
+    "latency_max_ms": 0.66242399998373,
+    "throughput_ops_per_sec": 3139.4555347132423,
+    "caveat": "Measures asyncio event loop and WebSocket framing. Does not include DOM rendering in WebView."
+  }
+}

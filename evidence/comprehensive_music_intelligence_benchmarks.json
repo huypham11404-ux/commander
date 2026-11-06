@@ -1,0 +1,59 @@
+{
+  "harmonic_analysis_benchmarks": [
+    {
+      "test_case": "Standard Major (C Major)",
+      "expected_key": "C major",
+      "detected_key": "C major",
+      "match": true,
+      "correlation_score": 0.928,
+      "analysis_time_ms": 42.53
+    },
+    {
+      "test_case": "Relative Minor (A Minor)",
+      "expected_key": "a minor",
+      "detected_key": "A minor",
+      "match": true,
+      "correlation_score": 0.886,
+      "analysis_time_ms": 22.74
+    },
+    {
+      "test_case": "Modal Interchange / Borrowed Chords (C Major + Fm + Ab)",
+      "expected_key": "C major",
+      "detected_key": "C minor",
+      "match": false,
+      "correlation_score": 0.622,
+      "analysis_time_ms": 21.5
+    },
+    {
+      "test_case": "Secondary Dominant (D7 -> G -> C)",
+      "expected_key": "C major",
+      "detected_key": "C major",
+      "match": true,
+      "correlation_score": 0.858,
+      "analysis_time_ms": 21.99
+    },
+    {
+      "test_case": "Neapolitan 6th (Db/F -> G7 -> Cm)",
+      "expected_key": "c minor",
+      "detected_key": "C minor",
+      "match": true,
+      "correlation_score": 0.658,
+      "analysis_time_ms": 21.2
+    },
+    {
+      "test_case": "Suspended / Inversion Ambiguity (Csus4 -> C/E -> G/B)",
+      "expected_key": "C major",
+      "detected_key": "C major",
+      "match": true,
+      "correlation_score": 0.856,
+      "analysis_time_ms": 22.21
+    }
+  ],
+  "voice_leading_evaluation": {
+    "parallel_fifth_detected_correctly": true,
+    "false_positive_on_contrary_motion": true,
+    "voice_crossing_detected_correctly": true,
+    "hidden_fifth_detected_correctly": false,
+    "music21_builtin_scope": "music21 VoiceLeadingQuartet reliably detects parallel 5ths/8ths and voice crossing pairwise. However, polyphonic 4-part arrangement requires O(N^2) pairwise permutation across all active tracks and cannot resolve polyrhythmic passing tones without custom heuristic timeslicing."
+  }
+}

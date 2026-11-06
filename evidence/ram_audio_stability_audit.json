@@ -1,0 +1,58 @@
+{
+  "hardware_target": {
+    "os": "Windows 10/11 x64",
+    "cpu": "Intel Core i3-1115G4 (2 cores, 4 threads, up to 4.10 GHz, 6MB cache)",
+    "ram": "8GB DDR4 (Shared with Intel UHD Graphics)",
+    "gpu": "Integrated Intel UHD Graphics (consumes ~1-1.5GB system RAM for VRAM)"
+  },
+  "measured_in_container_mb": {
+    "python_base": 14.0,
+    "python_with_mido_pretty_midi": 32.57,
+    "python_with_numpy_scipy": 33.82,
+    "python_with_music21": 72.59,
+    "python_running_chord_dsp": 89.42
+  },
+  "estimated_windows_workstation_breakdown_mb": {
+    "windows_os_and_background_services": {
+      "estimated_min": 2500,
+      "estimated_typical": 3200,
+      "status": "ESTIMATED"
+    },
+    "intel_uhd_shared_vram": {
+      "estimated_min": 800,
+      "estimated_typical": 1200,
+      "status": "ESTIMATED"
+    },
+    "reaper_daw_idle": {
+      "estimated_min": 80,
+      "estimated_typical": 150,
+      "status": "ESTIMATED"
+    },
+    "sample_vst_libraries_e_g_kontakt_pianoteq_strings": {
+      "estimated_min": 1500,
+      "estimated_typical": 3000,
+      "status": "ESTIMATED"
+    },
+    "tauri_webview2_runtime": {
+      "estimated_min": 60,
+      "estimated_typical": 110,
+      "status": "ESTIMATED"
+    },
+    "commander_python_core": {
+      "estimated_min": 80,
+      "estimated_typical": 120,
+      "status": "MEASURED_PROJECTED"
+    },
+    "total_estimated_system_ram_demand": {
+      "estimated_min": 5020,
+      "estimated_typical": 7780,
+      "status": "ESTIMATED"
+    }
+  },
+  "audio_stability_risk_analysis": {
+    "prior_claim": "Không bao giờ gây gián đoạn hay drop audio buffer",
+    "red_team_verdict": "CONTRADICTED / UNVERIFIABLE",
+    "risk_justification": "On an 8GB dual-core i3 machine with integrated GPU sharing RAM, running REAPER with heavy sample-based VSTs pushes total memory to 7.5GB+, dangerously close to OS paging. If Windows begins swapping memory to SSD/HDD pagefile during audio playback, audio buffer underruns (dropouts, clicks, pops) will inevitably occur. Furthermore, CPU spike during heavy music21 chordify or FFT calculation on a 2-core / 4-thread CPU could starve REAPER's real-time audio thread if core affinity is not managed.",
+    "required_action": "Retract absolute guarantee. Implement OS thread priority isolation, lazy-loading of music21, and RAM threshold alarms (alerting user if available system RAM falls below 1.2GB)."
+  }
+}

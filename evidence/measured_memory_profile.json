@@ -1,0 +1,15 @@
+{
+  "platform": "linux",
+  "measurements_mb": {
+    "python_base_rss": 14.0,
+    "after_mido_rss": 19.25,
+    "after_pretty_midi_rss": 32.57,
+    "after_numpy_rss": 32.57,
+    "after_scipy_rss": 33.82,
+    "after_music21_rss": 72.59,
+    "after_midi_key_chord_analysis_rss": 73.84,
+    "after_30s_dsp_rss": 89.42,
+    "delta_music21_import_mb": 38.77,
+    "total_python_process_rss_mb": 89.42
+  }
+}
