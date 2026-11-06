@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: commander
+Version: 1.0.0
+Requires-Dist: mido
+Requires-Dist: pretty_midi
+Requires-Dist: music21
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: websockets
+Requires-Dist: psutil
+Dynamic: requires-dist
