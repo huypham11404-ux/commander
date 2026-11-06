@@ -1,0 +1,141 @@
+[
+  {
+    "name": "Reaper-MCP (xDarkzx)",
+    "repo": "https://github.com/xDarkzx/Reaper-MCP",
+    "license": "Apache-2.0",
+    "language": "Python 3.10+ / Lua",
+    "ipc_mechanism": "File-based atomic swap (command.json/response.json with file locking and Lua defer poll)",
+    "maturity": "High (Active in 2026, rich test suite, comprehensive safety checks, undo grouping)",
+    "ram_footprint": "Low (~30-50MB RSS)",
+    "cpu_footprint": "Very Low (<1% idle)",
+    "compatibility": "Windows, macOS, Linux (cross-platform file locks)",
+    "reuse_recommendation": "Fork and extend / Extract module",
+    "strengths": [
+      "Atomic file IPC with flink/fcntl locking avoids port conflict issues",
+      "Robust undo_group mechanism (wraps actions inside native ReaScript Undo_BeginBlock/Undo_EndBlock)",
+      "Extensive tool registry (100+ tools for track, item, fx, midi, mix, patterns)",
+      "Permissive Apache-2.0 license"
+    ],
+    "risks_and_limitations": [
+      "Polling latency in Lua defer loop (~30ms typical roundtrip, not sub-millisecond)",
+      "Deeply coupled with REAPER Lua defer script",
+      "No native abstract DAW protocol"
+    ]
+  },
+  {
+    "name": "reaper-reapy-mcp (wegitor)",
+    "repo": "https://github.com/wegitor/reaper-reapy-mcp",
+    "license": "MIT",
+    "language": "Python / reapy (RPR bridge)",
+    "ipc_mechanism": "Python-reapy TCP socket bridge to REAPER python interpreter",
+    "maturity": "Medium (Clear modular controllers for track, fx, marker, midi, audio, master)",
+    "ram_footprint": "Moderate (~60-90MB RSS due to reapy socket runtime)",
+    "cpu_footprint": "Low-Moderate (Socket polling)",
+    "compatibility": "Windows, macOS, Linux (requires reapy server enabled inside REAPER)",
+    "reuse_recommendation": "Extract module / Reference only",
+    "strengths": [
+      "Clean Object-Oriented controller modularization (TrackController, MIDIController, etc.)",
+      "Permissive MIT license",
+      "Fast programmatic access via Python reapy wrapper"
+    ],
+    "risks_and_limitations": [
+      "reapy setup is notoriously brittle (requires specific Python DLL configured inside REAPER Preferences)",
+      "Frequent thread-safety crashes if reapy calls are made outside REAPER's GUI thread without inside_reaper()",
+      "Tightly tied to python-reapy, difficult to port to non-Python DAWs"
+    ]
+  },
+  {
+    "name": "reaper-daemon (wretcher207)",
+    "repo": "https://github.com/wretcher207/reaper-daemon",
+    "license": "MIT",
+    "language": "Shell / Lua / Python / File queues",
+    "ipc_mechanism": "Filesystem mailboxes (inbox/outbox/archive/commands)",
+    "maturity": "Early / Experimental",
+    "ram_footprint": "Very Low (~15MB)",
+    "cpu_footprint": "Low",
+    "compatibility": "Cross-platform filesystem",
+    "reuse_recommendation": "Reference only",
+    "strengths": [
+      "Zero network ports, purely asynchronous mailbox architecture"
+    ],
+    "risks_and_limitations": [
+      "Lacks formal schema, high I/O disk thrashing if unthrottled"
+    ]
+  },
+  {
+    "name": "daw-ai (hrubiian)",
+    "repo": "https://github.com/hrubiian/daw-ai",
+    "license": "MIT",
+    "language": "Rust",
+    "ipc_mechanism": "Rust native async actor / IPC",
+    "maturity": "Medium (Modern Rust architecture, audio crates)",
+    "ram_footprint": "Ultra-Low (~15-25MB RSS)",
+    "cpu_footprint": "Near-zero overhead",
+    "compatibility": "Windows, Linux, macOS",
+    "reuse_recommendation": "Reference only / Candidate for high-perf Native Adapter",
+    "strengths": [
+      "Blazing fast serialization",
+      "Memory safety and zero GC pauses (vital for audio system coexistence)",
+      "Clean crate boundaries"
+    ],
+    "risks_and_limitations": [
+      "Smaller ecosystem of high-level music theory libraries compared to Python"
+    ]
+  },
+  {
+    "name": "aura-daw (knobo)",
+    "repo": "https://github.com/knobo/aura-daw",
+    "license": "GPL-3.0",
+    "language": "TypeScript / React / Tauri (Rust)",
+    "ipc_mechanism": "Tauri IPC (frontend to backend Rust)",
+    "maturity": "High (Full open-source DAW GUI in web tech)",
+    "ram_footprint": "Moderate-High (~120-200MB RSS for Webview2)",
+    "cpu_footprint": "Moderate (GPU/Canvas rendering)",
+    "compatibility": "Windows, macOS, Linux",
+    "reuse_recommendation": "Reference only (GPL-3.0 copyleft barrier)",
+    "strengths": [
+      "Modern responsive timeline UI, audio engine separation in Rust"
+    ],
+    "risks_and_limitations": [
+      "GPL-3.0 license prevents closed/proprietary derivative integration without open-sourcing"
+    ]
+  },
+  {
+    "name": "ATRI_AGENT (Tz-WIND)",
+    "repo": "https://github.com/Tz-WIND/ATRI_AGENT",
+    "license": "AGPL-3.0",
+    "language": "Python / FastMCP / Plugins",
+    "ipc_mechanism": "HTTP / WebSocket / MCP",
+    "maturity": "Medium (Modular plugin tool runner)",
+    "ram_footprint": "Moderate (~70-120MB)",
+    "cpu_footprint": "Low",
+    "compatibility": "Cross-platform",
+    "reuse_recommendation": "Reference only (AGPL-3.0 copyleft)",
+    "strengths": [
+      "Clear plugin lifecycle and tool discovery schema"
+    ],
+    "risks_and_limitations": [
+      "Strong copyleft AGPL-3.0 cannot be embedded directly in permissive/commercial core"
+    ]
+  },
+  {
+    "name": "music21 / mido / pretty_midi (Open-source Musicology)",
+    "repo": "https://github.com/cuthbertLab/music21",
+    "license": "BSD-3-Clause / MIT",
+    "language": "Python",
+    "ipc_mechanism": "In-process library call",
+    "maturity": "Very High (Industry & academic standard for 15+ years)",
+    "ram_footprint": "music21 core (~60MB), mido (<5MB)",
+    "cpu_footprint": "Deterministic rule-based CPU calculations",
+    "compatibility": "All platforms",
+    "reuse_recommendation": "Reuse directly",
+    "strengths": [
+      "Deepest music theory rules: roman numeral analysis, voice leading check, scale transposition, counterpoint rules",
+      "Permissive BSD/MIT license",
+      "Runs 100% offline without GPU"
+    ],
+    "risks_and_limitations": [
+      "music21 startup time is ~1.5s (should be kept in warm memory or imported lazily)"
+    ]
+  }
+]

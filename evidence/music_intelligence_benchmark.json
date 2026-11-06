@@ -1,0 +1,62 @@
+{
+  "symbolic_midi_analysis": {
+    "parse_time_ms": 43.27775600017958,
+    "key_analysis_time_ms": 23.52362000010544,
+    "detected_key": "C minor",
+    "chords_found": [
+      {
+        "offset": 0.0,
+        "common_name": "minor triad",
+        "root": "C4",
+        "pitches": [
+          "C4",
+          "E-4",
+          "G4"
+        ]
+      },
+      {
+        "offset": 1.25,
+        "common_name": "minor triad",
+        "root": "C4",
+        "pitches": [
+          "C4",
+          "E-4",
+          "G4",
+          "C5"
+        ]
+      },
+      {
+        "offset": 2.3333333333333335,
+        "common_name": "enharmonic equivalent to major seventh chord",
+        "root": "C4",
+        "pitches": [
+          "G#3",
+          "C4",
+          "E-4",
+          "G4",
+          "C5",
+          "E-5"
+        ]
+      },
+      {
+        "offset": 2.5,
+        "common_name": "enharmonic equivalent to major triad",
+        "root": "C4",
+        "pitches": [
+          "G#3",
+          "C4",
+          "E-4",
+          "E-5"
+        ]
+      }
+    ],
+    "voice_leading_check": "No illegal parallel fifths detected"
+  },
+  "audio_feature_extraction": {
+    "feature_extraction_time_ms": 2.589250000028187,
+    "rms_level": 0.46343056456928844,
+    "peak_level": 1.0996400391014132,
+    "crest_factor": 2.3728258789978405,
+    "spectral_centroid_hz": 2658.4958290027807
+  }
+}

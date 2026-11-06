@@ -1,0 +1,32 @@
+{
+  "file_ipc": {
+    "protocol": "File-based Atomic Swap (Reaper-MCP style)",
+    "operations": 1000,
+    "avg_latency_ms": 0.26053660099478293,
+    "p50_latency_ms": 0.23278150013084087,
+    "p99_latency_ms": 0.5499179999333137,
+    "throughput_ops_sec": 3838.2323104768852
+  },
+  "socket_ipc": {
+    "protocol": "TCP / Local Loopback JSON-RPC (reapy/adapter style)",
+    "operations": 1000,
+    "avg_latency_ms": 0.16690151700368006,
+    "p50_latency_ms": 0.1638474999481332,
+    "p99_latency_ms": 0.24617200006105122,
+    "throughput_ops_sec": 5991.55728451498
+  },
+  "websocket_ipc": {
+    "protocol": "WebSocket JSON-RPC (Async UI/Commander Bridge)",
+    "operations": 1000,
+    "avg_latency_ms": 0.3282271800014769,
+    "p50_latency_ms": 0.304587499954323,
+    "p99_latency_ms": 0.531658999989304,
+    "throughput_ops_sec": 3046.670297065284
+  },
+  "transaction_rollback": {
+    "test": "Atomic Multi-Action Rollback",
+    "rollback_verified": true,
+    "rollback_time_ms": 0.0749040000300738,
+    "final_track_count": 0
+  }
+}

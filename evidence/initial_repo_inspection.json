@@ -1,0 +1,131 @@
+{
+  "Reaper-MCP": {
+    "files": [
+      "reaper_mcp/tool_registry.py",
+      "reaper_mcp/main.py",
+      "reaper_mcp/cc_map.py",
+      "reaper_mcp/reaper_client.py",
+      "reaper_mcp/safety.py",
+      "reaper_mcp/__init__.py",
+      "reaper_mcp/undo_group.py",
+      "reaper_mcp/shorthand.py",
+      "reaper_mcp_shared/constants.py",
+      "reaper_mcp_shared/protocol.py",
+      "reaper_mcp_shared/__init__.py",
+      "reaper_mcp_shared/path_safety.py",
+      "reaper_mcp_shared/plugin_cache.py",
+      "reaper_mcp_shared/error_codes.py",
+      "tests/test_reaper_client.py"
+    ],
+    "readme_head": "<!-- mcp-name: io.github.xDarkzx/reaper-mcp -->\n<h1 align=\"center\">ReaperMCP</h1>\n\n<p align=\"center\">\n  <strong>AI-powered music production in REAPER through the Model Context Protocol</strong>\n</p>\n\n<p align=\"center\">\n  <a href=\"https://www.python.org/\"><img src=\"https://img.shields.io/badge/python-3.10+-blue.svg\" alt=\"Python 3.10+\" /></a>\n  <a href=\"LICENSE\"><img src=\"https://img.shields.io/badge/license-Apache%202.0-green.svg\" alt=\"License\" /></a>\n  <a href=\"https://modelcontextprotocol.io\"><img src=\"https://img.shields.io/badge/MCP-compatible-purple.svg\" alt=\"MCP Compatible\" /></a>\n  <a hr"
+  },
+  "reaper-reapy-mcp": {
+    "files": [
+      "reaper_side_enable_server.py",
+      "src/__main__.py",
+      "src/reaper_controller.py",
+      "src/__init__.py",
+      "src/reaper_reapy_mcp.py",
+      "src/mcp_tools.py",
+      "tests/test_midi_mock.py",
+      "tests/test_reapy_connection.py",
+      "src/controllers/reapy_actions.py",
+      "src/controllers/base_controller.py",
+      "src/controllers/__init__.py",
+      "src/utils/item_utils.py",
+      "src/utils/__init__.py",
+      "src/utils/position_utils.py",
+      "src/controllers/master/master_controller.py"
+    ],
+    "readme_head": "# Reaper and MCP or AI integration\n\nA Python application for controlling REAPER Digital Audio Workstation (DAW) using the MCP(Model context protocol).\n\n![REAPER MCP MIDI generation Demo](docs/media/midi-generation.gif)\n\n\n![REAPER MCP project features Demo](docs/media/reaper-reapy-mcp-demo-for-gif-002.gif)\n\n## Features\n\n- **Track Management**: Create, rename, and color tracks\n- **FX Management**: Add, remove, and control effect parameters\n- **Project Control**: Set tempo, manage regions and markers\n- **Master Track Control**: Volume, pan, mute, and solo operations\n- **MIDI Operations**: Create "
+  },
+  "reaper-daemon": {
+    "files": [
+      "glama.json",
+      "reaper_mcp.py",
+      ".gitignore",
+      "verifyloop.py",
+      "console_config.example.json",
+      "LICENSE",
+      "performance_audition.py",
+      "netlify.toml",
+      "transcription_worker.py",
+      "watchdog.py",
+      "reaperd.py",
+      "install.sh",
+      "drum_workshop.py",
+      "AGENTS.md",
+      "instruments.py",
+      "server.json",
+      "INSTALL.md",
+      "instrument_inventory.py",
+      "songplan.py",
+      "drum_transcription.py"
+    ],
+    "readme_head": "<p align=\"center\">\n  <img src=\"docs/assets/readme-header.png\" alt=\"Reaper Daemon. Nothing is listening.\" width=\"100%\">\n</p>\n\n# Reaper Daemon\n\n[![Reaper Daemon MCP server \u2013 quality and maintenance score on Glama](https://glama.ai/mcp/servers/wretcher207/reaper-daemon/badges/score.svg)](https://glama.ai/mcp/servers/wretcher207/reaper-daemon)\n\nReaper Daemon is a REAPER MCP server and file bridge for driving REAPER from\nan AI agent, including mixing your session with Claude or any other agent.\nNo network socket, no port, no extensions.\n\nThe agent drops a JSON command file in a folder. A Lua script"
+  },
+  "daw-ai": {
+    "files": [
+      "src/main.rs",
+      "crates/daw-gpui/build.rs",
+      "crates/daw-tui/src/app.rs",
+      "crates/daw-tui/src/event.rs",
+      "crates/daw-tui/src/lib.rs",
+      "crates/daw-tui/src/views/effects.rs",
+      "crates/daw-tui/src/views/tracks.rs",
+      "crates/daw-tui/src/views/sequencer.rs",
+      "crates/daw-tui/src/views/visualizer.rs",
+      "crates/daw-tui/src/views/browser.rs",
+      "crates/daw-tui/src/views/piano_roll.rs",
+      "crates/daw-tui/src/views/code.rs",
+      "crates/daw-tui/src/views/mixer.rs",
+      "crates/daw-tui/src/views/mod.rs",
+      "crates/daw-tui/src/views/arrange.rs"
+    ],
+    "readme_head": "# daw-ai\n\n**The LLM-native DAW.** A full digital audio workstation in Rust \u2014 desktop\nGUI, terminal UI, and an MCP server that lets AI agents compose, mix, and\n*hear* your project. Linux-first.\n\n![Rust](https://img.shields.io/badge/rust-2021-orange)\n![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue)\n![Plugins](https://img.shields.io/badge/plugins-CLAP-purple)\n![AI](https://img.shields.io/badge/agents-MCP-green)\n\n![Arrange view](assets/screenshots/arrange.png)\n\n## Why this exists\n\n- **The project file is the API.** Songs are human-readable `.daw.json`\n  ([format docs](d"
+  },
+  "aura-daw": {
+    "package_json": "{\n  \"name\": \"aura\",\n  \"private\": true,\n  \"version\": \"0.1.0\",\n  \"type\": \"module\",\n  \"engines\": {\n    \"node\": \">=18 <25\"\n  },\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\",\n    \"check\": \"svelte-check --tsconfig ./tsconfig.json\",\n    \"test\": \"vitest run\",\n    \"tauri\": \"tauri\",\n    \"setup\": \"bash scripts/setup.sh\",\n    \"setup:check\": \"bash scripts/setup.sh ",
+    "readme_head": "# AURA\n\n**An AI-native digital audio workstation, built by AI agents \u2014 with a real-time Rust\nengine, local AI music models, and an embedded MCP server so AI agents can *play* it too.**\n\n<!-- Recorded from the real app: Claude driving AURA over MCP end-to-end. -->\n![Claude composing a track in AURA over MCP](docs/screenshots/mcp-composition.gif)\n\n![The AURA timeline \u2014 audio clips, MIDI clips, per-track mixing, live meters](docs/screenshots/timeline-hero.png)\n\nAURA is a working vertical slice of an FL Studio-class DAW: a native\n**Tauri v2 + Svelte 5** app around a lock-free real-time audio engin"
+  },
+  "ATRI_AGENT": {
+    "files": [
+      "main.py",
+      "dashboard/music.py",
+      "dashboard/server.py",
+      "dashboard/__init__.py",
+      "dashboard/music_library.py",
+      "dashboard/host_dawproject_sync.py",
+      "dashboard/music_streaming.py",
+      "core/piano_playability.py",
+      "core/config_schema.py",
+      "core/music_project.py",
+      "core/event_bus.py",
+      "core/music_export.py",
+      "core/__init__.py",
+      "core/document_text.py",
+      "core/host.py"
+    ],
+    "readme_head": "# ATRI\n\n**\u672c\u5730\u4f18\u5148\u7684 AI Agent \u6846\u67b6\uff0c\u987a\u5e26\u628a DAW \u4e5f\u505a\u6210 Agent \u80fd\u76f4\u63a5\u64cd\u4f5c\u7684\u754c\u9762\u3002**\n\nATRI \u9996\u5148\u662f\u4e00\u4e2a\u53ef\u672c\u5730\u8fd0\u884c\u7684 **AI Agent Runtime**\uff1a\u591a Provider LLM\u3001\u5de5\u5177\u8c03\u7528\u3001Plan / Agent / DeepResearch \u6a21\u5f0f\u3001\u4f1a\u8bdd\u6301\u4e45\u5316\u3001\u5b50\u4efb\u52a1\u3001MCP\u3001Skills\u3001\u77e5\u8bc6\u5e93\u3001Web \u641c\u7d22\uff0c\u4ee5\u53ca WebChat / OneBot11 \u7b49\u63a5\u5165\u3002\u4f60\u53ef\u4ee5\u628a\u5b83\u5f53\u6210 coding agent \u7528\u2014\u2014\u8bfb\u6539\u6587\u4ef6\u3001\u8dd1\u7ec8\u7aef\u3001\u7ba1 workspace\u3001\u63a5\u5916\u90e8\u5de5\u5177\u2014\u2014\u4e5f\u53ef\u4ee5\u5728 Dashboard \u91cc\u5b8c\u6210\u65e5\u5e38\u5bf9\u8bdd\u4e0e\u4efb\u52a1\u7f16\u6392\u3002\n\n\u5728\u6b64\u4e4b\u4e0a\uff0cATRI \u53c8\u662f\u4e00\u4e2a **Agent \u539f\u751f\u97f3\u4e50\u5de5\u4f5c\u7ad9**\u3002\u5b83\u5c1d\u8bd5\u7684\u662f\u4e00\u6761\u548c\u300c\u8f93\u5165\u63d0\u793a\u8bcd\uff0c\u751f\u6210\u4e00\u6bb5\u5b8c\u6574\u97f3\u9891\u300d\u5b8c\u5168\u4e0d\u540c\u7684 AI \u97f3\u4e50\u8def\u7ebf\uff1a\u8ba9\u540c\u4e00\u4e2a Agent \u8fdb\u5165 DAW \u5de5\u7a0b\u5185\u90e8\uff0c\u8bfb\u53d6\u65f6\u95f4\u7ebf\u3001\u8f68\u9053\u3001clip\u3001\u548c\u58f0\u6807\u8bb0\u3001MIDI notes\u3001controller events \u4e0e\u81ea\u52a8\u5316\u6570\u636e\uff0c\u7136\u540e\u628a\u81ea\u5df1\u7684\u5224\u65ad\u5199\u56de\u5e95\u5c42\u97f3\u4e50\u7ed3\u6784\u3002\n\n\u6362\u53e5\u8bdd\u8bf4\uff0c\u97f3\u4e50\u53ea\u662f Agent \u80fd\u529b\u7684\u5ef6\u4f38\uff0c\u4e0d\u662f\u9879\u76ee\u7684\u5168\u90e8\u3002ATRI \u4e0d\u628a AI \u97f3\u4e50\u521b\u4f5c\u7406\u89e3\u4e3a\u4e00\u6b21\u6027\u5410\u51fa\u4e00\u6bb5\u4e0d\u53ef\u7f16\u8f91\u7684\u6ce2\u5f62\uff1b\u5b83\u628a\u5de5\u7a0b\u672c\u8eab\u53d8\u6210\u5de5\u5177\u9762\uff1aAI \u53ef\u4ee5\u5199 bassline\u3001\u753b CC \u66f2\u7ebf\u3001\u4eba\u6027\u5316 timing \u548c velocity\uff0c\u4e5f\u53ef\u4ee5\u53ea\u5b8c\u6210\u4e00\u4e2a\u5f88\u5c0f\u4f46\u5f88\u8d39\u624b\u7684\u7f16\u8f91\u52a8\u4f5c\u3002\u6700\u7ec8\u7559"
+  },
+  "setloom": {
+    "files": [
+      "scripts/generate_candidate.py",
+      "scripts/magenta_smoke.py",
+      "scripts/validate_basic_pitch_mlx.py",
+      "scripts/convert_basic_pitch_mlx.py",
+      "tests/test_rhythm.py",
+      "tests/test_transcribe.py",
+      "tests/test_mastering.py",
+      "tests/test_layers.py",
+      "tests/test_cli.py",
+      "tests/test_fusion.py",
+      "tests/test_audio.py",
+      "tests/test_schema.py",
+      "tests/test_conductor.py",
+      "tests/test_transcription.py",
+      "tests/test_basic_pitch_activations.py"
+    ],
+    "readme_head": "<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->\n\n# Setloom\n\nSetloom, by AppAutomaton, is an open-source collection of music-production tools\nand agent guidance. The agent is responsible for musical taste, creative\njudgment and production quality. The human gives direction, hears the result\nand decides whether it succeeds. Rejected work needs substantive revision.\n\n## Working with music\n\nStart with the intended effect and the actual recording or performance. Inspect\ncomplete phrases, identify the relevant notes, articulation, modulation and\nsound, then implement and evaluate a musical decision. "
+  }
+}
