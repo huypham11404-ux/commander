@@ -1,6 +1,6 @@
-"""Harmony Context Engine resolving music21's modal interchange and voice leading limitations, with style profiles and instrument range checks."""
+"""Harmony Context Engine resolving music21's modal interchange and providing full 4-voice SATB voice-leading analysis."""
 import music21
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 
 INSTRUMENT_RANGES = {
     "Violin": (55, 103),  # G3 - G7
@@ -8,7 +8,11 @@ INSTRUMENT_RANGES = {
     "Cello": (36, 76),   # C2 - E5
     "Double Bass": (28, 67), # E1 - G4
     "Piano": (21, 108),  # A0 - C8
-    "Bass Guitar": (28, 67) # E1 - G4
+    "Bass Guitar": (28, 67), # E1 - G4
+    "Soprano": (60, 84), # C4 - C6
+    "Alto": (53, 77),    # F3 - F5
+    "Tenor": (48, 72),   # C3 - C5
+    "Bass": (40, 64)     # E2 - E4
 }
 
 class HarmonyContextEngine:
@@ -96,7 +100,7 @@ class HarmonyContextEngine:
                 m_type = "SIMILAR"
             motion_types.append(m_type)
 
-            # Check parallel fifth: interval is 5th/12th AND motion is parallel or similar in same direction
+            # Check parallel fifth
             if int1.generic.mod7 == 5 and int2.generic.mod7 == 5:
                 if (mot_a > 0 and mot_b > 0) or (mot_a < 0 and mot_b < 0):
                     violations.append({
@@ -132,6 +136,64 @@ class HarmonyContextEngine:
             "violations": violations,
             "motion_types": motion_types,
             "is_clean": len(violations) == 0
+        }
+
+    def analyze_satb_voice_leading(
+        self,
+        soprano: List[str],
+        alto: List[str],
+        tenor: List[str],
+        bass: List[str]
+    ) -> Dict[str, Any]:
+        """Perform comprehensive 4-voice SATB voice-leading analysis across all 6 voice pairs.
+
+        Pairs evaluated: (Soprano-Alto, Soprano-Tenor, Soprano-Bass, Alto-Tenor, Alto-Bass, Tenor-Bass).
+        """
+        voices = {
+            "Soprano": soprano,
+            "Alto": alto,
+            "Tenor": tenor,
+            "Bass": bass
+        }
+
+        # Verify length consistency
+        lengths = {name: len(v) for name, v in voices.items()}
+        if len(set(lengths.values())) != 1 or next(iter(lengths.values())) < 2:
+            return {
+                "is_clean": False,
+                "error": f"Inconsistent voice lengths: {lengths}",
+                "total_violations": 0,
+                "pair_reports": {}
+            }
+
+        pairs = [
+            ("Soprano", "Alto"),
+            ("Soprano", "Tenor"),
+            ("Soprano", "Bass"),
+            ("Alto", "Tenor"),
+            ("Alto", "Bass"),
+            ("Tenor", "Bass")
+        ]
+
+        pair_reports = {}
+        all_violations = []
+
+        for v1_name, v2_name in pairs:
+            # Note: lower voice goes first for standard interval measurement
+            v_low_name, v_high_name = (v2_name, v1_name)
+            report = self.check_voice_leading(voices[v_low_name], voices[v_high_name])
+            pair_reports[f"{v1_name}_{v2_name}"] = report
+            for viol in report["violations"]:
+                all_violations.append({
+                    "voices": (v1_name, v2_name),
+                    **viol
+                })
+
+        return {
+            "is_clean": len(all_violations) == 0,
+            "total_violations": len(all_violations),
+            "violations": all_violations,
+            "pair_reports": pair_reports
         }
 
     @staticmethod
